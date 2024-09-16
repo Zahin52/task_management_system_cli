@@ -19,7 +19,7 @@ def main():
     # Complete task
     complete_parser = subparsers.add_parser("complete",
                                             help="Mark a task as completed")
-    complete_parser.add_argument("title", help="Task title")
+    complete_parser.add_argument("task_id", help="Task ID")
 
     # List tasks
     list_parser = subparsers.add_parser("list", help="List all tasks")
@@ -36,19 +36,16 @@ def main():
         task = manager.add_task(args.title, args.description)
         print(f"Task '{task.title}' added successfully.")
     elif args.command == "complete":
-        if manager.complete_task(args.title):
-            print(f"Task '{args.title}' marked as completed.")
+        if manager.complete_task(args.task_id):
+            print(f"Task '{args.task_id}' marked as completed.")
         else:
             print(f"Task '{args.title}' not found.")
     elif args.command == "list":
         tasks = manager.list_tasks(include_completed=args.all)
-        print(tasks)
         if tasks:
-            for task in tasks:
-                task = dict(task)
-                print(task.keys())
-                status = "Completed" if task["completed"] else "Pending"
-                print(f"{task.get('title')} - {status}")
+                for task in tasks:
+                    status = "Completed" if task.completed else "Pending"
+                    print(f"ID: {task.id}, Title: {task.title} - {status}")
         else:
             print("No tasks found.")
     elif args.command == "report":

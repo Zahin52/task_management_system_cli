@@ -1,14 +1,19 @@
 from datetime import datetime
-
+import uuid
 
 class Task:
 
-    def __init__(self, title, description, completed = False, created_at = datetime.now().isoformat()):
+    def __init__(self,title, description, id = uuid.uuid4(), completed = False, created_at = datetime.now().isoformat(), completed_at = None):
+        self.id = str(id) 
         self.title = title
         self.description = description
         self.completed = completed
         self.created_at = created_at
-
+        self.completed_at = completed_at
+    
+    def mark_completed(self):
+        self.completed = True
+        self.completed_at = datetime.now().isoformat()
 
 class TaskManager:
 
@@ -26,16 +31,19 @@ class TaskManager:
         self.storage.save_task(task)
         return task
 
-    def complete_task(self, title):
-        task = self.storage.get_task(title)
-        if task:
-            task.completed = True
+    def complete_task(self, task_id):
+        task_dict = self.storage.get_task(task_id)
+        if task_dict:
+            task = Task(**task_dict) if isinstance(task_dict, dict) else task_dict
+            task.mark_completed()
             self.storage.update_task(task)
             return True
         return False
 
     def list_tasks(self, include_completed=False):
         tasks = self.storage.get_all_tasks()
+        if not include_completed:
+            tasks = [task for task in tasks if not task.completed]
         return tasks
 
     def generate_report(self):

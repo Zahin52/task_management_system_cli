@@ -12,7 +12,6 @@ class Storage:
             try:
                 with open(self.filepath, 'r') as file:
                     list_of_tasks = [Task(**task) for task in json.load(file)]
-                    print(list_of_tasks)
                     return list_of_tasks
             except json.JSONDecodeError:
                 return []
@@ -29,13 +28,14 @@ class Storage:
 
     def update_task(self, updated_task):
         for i, task in enumerate(self.tasks):
-            if task.title == updated_task.title:
+            if task.id == updated_task.id:  # Use ID for task identification
                 self.tasks[i] = updated_task
                 break
+        self._save_tasks() # Updating the local DB (json file)
 
-    def get_task(self, title):
+    def get_task(self, task_id):
         for task in self.tasks:
-            if task.title == title:
+            if task.id == task_id:
                 return task
         return None
 
