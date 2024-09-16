@@ -1,3 +1,9 @@
+# Please Readme:
+<b>
+    All the feature implementations, bug fixing, refactoring, and task details are given below 
+</b>
+
+
 # Task Management System
 
 This is a simple command-line (CLI) task management system implemented in Python.
@@ -42,7 +48,7 @@ To run all the unit tests, use the following command:
 python -m unittest discover tests
 ```
 
-## Your Task
+## My Task
 
 **Ensure and validate with tests that the app meets the required functionality** and addresses any bugs. Enhance performance and do optimisations to the best of your knowledge, while refactoring the code for better readability and maintainability. Feel free to make necessary assumptions where applicable.
 
@@ -54,3 +60,25 @@ Once you are done, please:
 2. Reply to our email with the repository link to complete your submission within the deadline
 
 Good luck!
+
+## Key Missing Features and Issues
+1. <b>Persistence:</b> The task list does not persist between sessions (critical missing functionality).
+
+2. <b>Task Completion Timing:</b> Task objects need to store completed_at timestamp to calculate the average time to complete tasks.
+
+3. <b>Error Handling:</b> Minimal error handling is implemented, especially around task completion, file read/write operations, or input validation.
+
+4. <b>Testing:</b> Proper tests should be written for all functions.
+
+## Suggested and Implemented Fixes
+1. <b>Persistence:</b> Used a JSON file to store and load tasks between sessions in the Storage class.
+Added file read/write operations to save the tasks when the app is closed and load them when the app starts.
+
+2. <b>Task Completion Timing:</b> Modified the Task class to store the completed_at timestamp.
+Calculate the average time for completed tasks in the report.
+
+3. <b>Error Handling:</b> Added input validation and error handling for file operations and invalid commands.
+
+4. <b>Unit Testing:</b> Created unit tests to validate task addition, completion, listing, and reporting. Additionally, add few more unit test.
+
+5. <b>CLI user interface modification: </b> Gave an interactive feel to command-line (CLI) task management system

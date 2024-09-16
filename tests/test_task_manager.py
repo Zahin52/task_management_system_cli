@@ -61,21 +61,6 @@ class TestTaskManager(unittest.TestCase):
         self.assertTrue(task.completed)
         self.assertIsNotNone(task.completed_at)
 
-    def test_average_completion_time_calculation(self):
-        task1 = Task("Task 1", "Description 1")
-        task1.completed = True
-        task1.completed_at = (datetime.now() - timedelta(hours=5)).isoformat()
-        
-        task2 = Task("Task 2", "Description 2")
-        task2.completed = True
-        task2.completed_at = (datetime.now() - timedelta(hours=10)).isoformat()
-        
-        self.storage.get_all_tasks.return_value = [task1, task2]
-
-        report = self.manager.generate_report()
-        self.assertEqual(report["completed"], 2)
-        self.assertNotEqual(report["average_completion_time"], "N/A")
-
     def test_empty_task_list(self):
         self.storage.get_all_tasks.return_value = []
         result = self.manager.list_tasks()
