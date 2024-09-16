@@ -3,11 +3,11 @@ from datetime import datetime
 
 class Task:
 
-    def __init__(self, title, description):
+    def __init__(self, title, description, completed = False, created_at = datetime.now().isoformat()):
         self.title = title
         self.description = description
-        self.completed = False
-        self.created_at = datetime.now().isoformat()
+        self.completed = completed
+        self.created_at = created_at
 
 
 class TaskManager:

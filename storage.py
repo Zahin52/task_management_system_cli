@@ -1,5 +1,6 @@
 import json
 import os
+from task_manager import Task
 class Storage:
 
     def __init__(self):
@@ -10,7 +11,7 @@ class Storage:
         if os.path.exists(self.filepath):
             try:
                 with open(self.filepath, 'r') as file:
-                    list_of_tasks = [task for task in json.load(file)]
+                    list_of_tasks = [Task(**task) for task in json.load(file)]
                     print(list_of_tasks)
                     return list_of_tasks
             except json.JSONDecodeError:
