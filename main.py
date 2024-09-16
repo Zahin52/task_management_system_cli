@@ -49,7 +49,11 @@ def main():
         else:
             print("No tasks found.")
     elif args.command == "report":
-        print(manager.generate_report())
+        report = manager.generate_report()
+        print(f"Total Tasks: {report['total']}")
+        print(f"Completed Tasks: {report['completed']}")
+        print(f"Pending Tasks: {report['pending']}")
+        print(f"Average Completion Time: {report['average_completion_time']}")
     else:
         parser.print_help()
 

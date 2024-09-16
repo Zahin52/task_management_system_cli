@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 
 class Task:
@@ -50,11 +50,26 @@ class TaskManager:
         tasks = self.storage.get_all_tasks()
         total_tasks = len(tasks)
         completed_tasks = len([task for task in tasks if task.completed])
+        pending_tasks = total_tasks - completed_tasks
+
+        # Calculate average time to complete tasks
+        total_time = timedelta()
+        completed_count = 0
+
+        for task in tasks:
+            if task.completed_at:
+                created_at = datetime.fromisoformat(task.created_at)
+                completed_at = datetime.fromisoformat(task.completed_at)
+                total_time += (completed_at - created_at)
+                completed_count += 1
+
+        average_time = total_time / completed_count if completed_count > 0 else "N/A"
 
         report = {
             "total": total_tasks,
             "completed": completed_tasks,
-            "pending": total_tasks - completed_tasks
+            "pending": pending_tasks,
+            "average_completion_time": str(average_time) if completed_count > 0 else "No completed tasks"
         }
 
         return report
