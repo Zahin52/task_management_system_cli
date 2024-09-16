@@ -1,19 +1,31 @@
 from datetime import datetime, timedelta
 import uuid
 
-class Task:
 
-    def __init__(self,title, description, id = uuid.uuid4(), completed = False, created_at = datetime.now().isoformat(), completed_at = None):
-        self.id = str(id) 
+class Task:
+    #  Added id as a property to uniqly identy task
+    #  Added completed_at property to calculate the average task completion time
+    def __init__(
+        self,
+        title,
+        description,
+        id=None,
+        completed=False,
+        created_at=None,
+        completed_at=None,
+    ):
+        self.id = str(uuid.uuid4()) if not id else id
         self.title = title
         self.description = description
         self.completed = completed
-        self.created_at = created_at
+        self.created_at = datetime.now().isoformat() if not created_at else created_at
         self.completed_at = completed_at
-    
+
+    #    Marking task as complete
     def mark_completed(self):
         self.completed = True
         self.completed_at = datetime.now().isoformat()
+
 
 class TaskManager:
 
@@ -25,9 +37,7 @@ class TaskManager:
         # empty title can not be allowed
         if not title:
             raise ValueError("Task title cannot be empty.")
-        print(f"title = {title} and description = {description}")
         task = Task(title, description)
-        print(task.title, task.description, task.completed)
         self.storage.save_task(task)
         return task
 
@@ -60,7 +70,7 @@ class TaskManager:
             if task.completed_at:
                 created_at = datetime.fromisoformat(task.created_at)
                 completed_at = datetime.fromisoformat(task.completed_at)
-                total_time += (completed_at - created_at)
+                total_time += completed_at - created_at
                 completed_count += 1
 
         average_time = total_time / completed_count if completed_count > 0 else "N/A"
@@ -69,8 +79,9 @@ class TaskManager:
             "total": total_tasks,
             "completed": completed_tasks,
             "pending": pending_tasks,
-            "average_completion_time": str(average_time) if completed_count > 0 else "No completed tasks"
+            "average_completion_time": (
+                str(average_time) if completed_count > 0 else "No completed tasks"
+            ),
         }
 
         return report
-
