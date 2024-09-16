@@ -3,7 +3,7 @@ import uuid
 
 
 class Task:
-    #  Added id as a property to uniqly identy task
+    #  Added id as a property to uniquely identify task
     #  Added completed_at property to calculate the average task completion time
     def __init__(
         self,
