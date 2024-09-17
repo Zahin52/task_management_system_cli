@@ -22,26 +22,31 @@ The application should allow users to do the following:
 5. The application must persist user data across sessions, ensuring that all information remains intact and accessible upon returning, without resetting or losing any previously entered tasks
 
 ## Key Missing Features and Issues
-1. <b>Persistence:</b> The task list does not persist between sessions (critical missing functionality).
+1. <b> No Id property:</b> Task object did not have any Id property. Previously it was matching task title to identify task. Which can create problem if multiple task have same title.
 
-2. <b>Task Completion Timing:</b> Task objects need to store completed_at timestamp to calculate the average time to complete tasks.
+2. <b>Persistence:</b> The task list does not persist between sessions (critical missing functionality).
 
-3. <b>Error Handling:</b> Minimal error handling is implemented, especially around task completion, file read/write operations, or input validation.
+3. <b>Task Completion Timing:</b> Task objects need to store completed_at timestamp to calculate the average time to complete tasks.
 
-4. <b>Testing:</b> Proper tests should be written for all functions.
+4. <b>Error Handling:</b> Minimal error handling is implemented, especially around task completion, file read/write operations, or input validation.
+
+5. <b>Testing:</b> Proper tests should be written for all functions.
+
+6. <b>CLI user interface modification: </b> argparse based argument base CLI command is not user friendly, also not interactive enough.
 
 ## Suggested and Implemented Fixes
-1. <b>Persistence:</b> Used a JSON file to store and load tasks between sessions in the Storage class.
+1. <b> No Id property:</b> Added Id property using uuid. Now, Tasks can be identified uniquely and less change for error and bugs.
+2. <b>Persistence:</b> Used a JSON file to store and load tasks between sessions in the Storage class.
 Added file read/write operations to save the tasks when the app is closed and load them when the app starts.
 
-2. <b>Task Completion Timing:</b> Modified the Task class to store the completed_at timestamp.
+3. <b>Task Completion Timing:</b> Modified the Task class to store the completed_at timestamp.
 Calculate the average time for completed tasks in the report.
 
-3. <b>Error Handling:</b> Added input validation and error handling for file operations and invalid commands.
+4. <b>Error Handling:</b> Added input validation and error handling for file operations and invalid commands.
 
-4. <b>Unit Testing:</b> Created unit tests to validate task addition, completion, listing, and reporting. Additionally, add few more unit test.
+5. <b>Unit Testing:</b> Created unit tests to validate task addition, completion, listing, and reporting. Additionally, add few more unit test.
 
-5. <b>CLI user interface modification: </b> Gave an interactive feel to command-line (CLI) task management system
+6. <b>CLI user interface modification: </b> Gave an interactive feel to command-line (CLI) task management system
 
 
 ## Setup
